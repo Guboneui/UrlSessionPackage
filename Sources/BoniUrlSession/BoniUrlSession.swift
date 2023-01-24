@@ -13,7 +13,7 @@ open class BoniUrlSession {
 
 @available(iOS 13.0.0, *)
 extension BoniUrlSession: UrlSessionManagerProtocol {
-  func requestPlane<T: Codable>(url: String, method: HttpMethod, resonse: T.Type) async throws -> T {
+  public func requestPlane<T: Codable>(url: String, method: HttpMethod, resonse: T.Type) async throws -> T {
     let request = await makePlaneRequest(url: url, method: method)
     let (data, response) = try await URLSession.shared.data(for: request)
     guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw APIError() }
@@ -21,7 +21,7 @@ extension BoniUrlSession: UrlSessionManagerProtocol {
     return responseData
   }
   
-  func requestQueryString<T: Codable>(url: String, method: HttpMethod, query: [String:Any], response: T.Type) async throws -> T {
+  public func requestQueryString<T: Codable>(url: String, method: HttpMethod, query: [String:Any], response: T.Type) async throws -> T {
     let request = await makeQueryRequest(url: url, method: method, query: query)
     let (data, response) = try await URLSession.shared.data(for: request)
     guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw APIError() }
@@ -29,7 +29,7 @@ extension BoniUrlSession: UrlSessionManagerProtocol {
     return responseData
   }
   
-  func requestParameter<T: Codable>(url: String, method: HttpMethod, parameter: [String:Any], resonse: T.Type) async throws -> T {
+  public func requestParameter<T: Codable>(url: String, method: HttpMethod, parameter: [String:Any], resonse: T.Type) async throws -> T {
     let request = await makeParameterRequest(url: url, method: method, parameter: parameter)
     let (data, response) = try await URLSession.shared.data(for: request)
     guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw APIError() }
@@ -37,7 +37,7 @@ extension BoniUrlSession: UrlSessionManagerProtocol {
     return responseData
   }
   
-  func requestQueryWithParameter<T: Codable>(url: String, method: HttpMethod, query: [String:Any], parameter: [String:Any], resonse: T.Type) async throws -> T {
+  public func requestQueryWithParameter<T: Codable>(url: String, method: HttpMethod, query: [String:Any], parameter: [String:Any], resonse: T.Type) async throws -> T {
     let request = await makeQueryWithParameterRequest(url: url, method: method, query: query, parameter: parameter)
     let (data, response) = try await URLSession.shared.data(for: request)
     guard (response as? HTTPURLResponse)?.statusCode == 200 else { throw APIError() }
