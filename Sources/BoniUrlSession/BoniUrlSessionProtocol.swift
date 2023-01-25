@@ -20,7 +20,7 @@ extension UrlSessionManagerProtocol {
   }
   
   func makeQueryRequest(url: String, method: HttpMethod, query: [String:Any]) async -> URLRequest {
-    let queryString = query.map{"?\($0)=\($1)"}.joined()
+    let queryString = query.map{"?\($0)=\(String(describing: $1).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"}.joined()
     var request = URLRequest(url: URL(string: url+queryString)!)
     request.httpMethod = method.rawValue
     return request
@@ -34,7 +34,7 @@ extension UrlSessionManagerProtocol {
   }
   
   func makeQueryWithParameterRequest(url: String, method: HttpMethod, query: [String:Any], parameter: [String:Any]) async -> URLRequest {
-    let queryString = query.map{"?\($0)=\($1)"}.joined()
+    let queryString = query.map{"?\($0)=\(String(describing: $1).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"}.joined()
     var request = URLRequest(url: URL(string: url+queryString)!)
     request.httpMethod = method.rawValue
     request.httpBody = try! JSONSerialization.data(withJSONObject: parameter, options: [])
