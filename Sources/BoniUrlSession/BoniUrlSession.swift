@@ -17,11 +17,9 @@ extension BoniUrlSession: UrlSessionManagerProtocol {
     let request = await makePlaneRequest(url: url, method: method)
     let (data, response) = try await URLSession.shared.data(for: request)
     guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-      let statusCode: Int = (response as? HTTPURLResponse)?.statusCode ?? 500
-      print("🚨[ERROR]: \(APIError(message: "plz check http request", status: statusCode))")
-      throw APIError()
+      throw APIError.StatusCodeError
     }
-    guard let responseData = try? JSONDecoder().decode(T.self, from: data) else { throw APIError() }
+    guard let responseData = try? JSONDecoder().decode(T.self, from: data) else { throw APIError.DecodingError }
     return responseData
   }
   
@@ -29,11 +27,9 @@ extension BoniUrlSession: UrlSessionManagerProtocol {
     let request = await makeQueryRequest(url: url, method: method, query: query)
     let (data, response) = try await URLSession.shared.data(for: request)
     guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-      let statusCode: Int = (response as? HTTPURLResponse)?.statusCode ?? 500
-      print("🚨[ERROR]: \(APIError(message: "plz check http request", status: statusCode))")
-      throw APIError()
+      throw APIError.StatusCodeError
     }
-    guard let responseData = try? JSONDecoder().decode(T.self, from: data) else { throw APIError() }
+    guard let responseData = try? JSONDecoder().decode(T.self, from: data) else { throw APIError.DecodingError }
     return responseData
   }
   
@@ -41,11 +37,9 @@ extension BoniUrlSession: UrlSessionManagerProtocol {
     let request = await makeParameterRequest(url: url, method: method, parameter: parameter)
     let (data, response) = try await URLSession.shared.data(for: request)
     guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-      let statusCode: Int = (response as? HTTPURLResponse)?.statusCode ?? 500
-      print("🚨[ERROR]: \(APIError(message: "plz check http request", status: statusCode))")
-      throw APIError()
+      throw APIError.StatusCodeError
     }
-    guard let responseData = try? JSONDecoder().decode(T.self, from: data) else { throw APIError() }
+    guard let responseData = try? JSONDecoder().decode(T.self, from: data) else { throw APIError.DecodingError }
     return responseData
   }
   
@@ -53,11 +47,9 @@ extension BoniUrlSession: UrlSessionManagerProtocol {
     let request = await makeQueryWithParameterRequest(url: url, method: method, query: query, parameter: parameter)
     let (data, response) = try await URLSession.shared.data(for: request)
     guard (response as? HTTPURLResponse)?.statusCode == 200 else {
-      let statusCode: Int = (response as? HTTPURLResponse)?.statusCode ?? 500
-      print("🚨[ERROR]: \(APIError(message: "plz check http request", status: statusCode))")
-      throw APIError()
+      throw APIError.StatusCodeError
     }
-    guard let responseData = try? JSONDecoder().decode(T.self, from: data) else { throw APIError() }
+    guard let responseData = try? JSONDecoder().decode(T.self, from: data) else { throw APIError.DecodingError }
     return responseData
   }
 }

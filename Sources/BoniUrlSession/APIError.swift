@@ -3,7 +3,7 @@
 
 import Foundation
 
-struct APIError: Codable, Error {
-  var message: String?
-  var status: Int?
+enum APIError: Error {
+  case DecodingError
+  case StatusCodeError
 }
