@@ -20,8 +20,11 @@ extension UrlSessionManagerProtocol {
   }
   
   func makeQueryRequest(url: String, method: HttpMethod, query: [String:Any]) async -> URLRequest {
-    let queryString = query.map{"?\($0)=\(String(describing: $1).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"}.joined()
-    var request = URLRequest(url: URL(string: url+queryString)!)
+    var urlComponents = URLComponents(string: url)!
+    let queryString = query.map{ URLQueryItem(name: $0.key, value: String(describing: $0.value)) }
+    urlComponents.queryItems = queryString
+    let requestURL = urlComponents.url!
+    var request = URLRequest(url: requestURL)
     request.httpMethod = method.rawValue
     return request
   }
